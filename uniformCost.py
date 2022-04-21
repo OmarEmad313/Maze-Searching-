@@ -1,5 +1,5 @@
 from pyMaze import maze,agent,COLOR,textLabel
-def dijkstra(m,*h,start=None):
+def uniformCost(m,*h,start=None):
     if start is None:
         start=(m.rows,m.cols)
 
@@ -65,7 +65,7 @@ if __name__=='__main__':
     h5.cost=100
 
     # path,c=dijstra(myMaze,h1,h2,h2,h3,h4,h5)
-    path,c=dijkstra(myMaze,h1,h2,h3,h4,h5,start=(6,1))
+    path,c= uniformCost(myMaze, h1, h2, h3, h4, h5, start=(6, 1))
     textLabel(myMaze,'Total Cost',c)
 
     # a=agent(myMaze,color=COLOR.cyan,filled=True,footprints=True)

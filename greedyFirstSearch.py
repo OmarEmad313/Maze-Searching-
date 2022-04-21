@@ -5,9 +5,7 @@ def heuristicCost(cell1,cell2):
     x1,y1=cell1
     x2,y2=cell2
     return abs(x1-x2)+abs(y1-y2)
-def aStar(inputMaze):
-    startCell=(m.rows,m.cols)
-    goalCell=(1, 1)
+def greedy(inputMaze,startCell,goalCell):
     h_score = {cell: float("inf") for cell in m.grid}
     h_score[startCell]=heuristicCost(startCell, goalCell)
 
@@ -42,21 +40,21 @@ def aStar(inputMaze):
     while cell!=startCell:
          path[pathWithReservedArrows[cell]]=cell
          cell=pathWithReservedArrows[cell]
-    return searchPath,path,pathWithReservedArrows
+    return searchPath,path
 
 
 
-m=maze(30,30)
-m.CreateMaze(theme='light',loadMaze="maze--2022-04-20--17-49-46.csv")
-searchPath, aPath, fwdPath = aStar(m)
-a = agent(m, footprints=True, color=COLOR.blue, filled=True)
-b = agent(m, footprints=True, color=COLOR.yellow, filled=True)
-c = agent(m, footprints=True, color=COLOR.red)
+m=maze(5,5)
+m.CreateMaze(theme='purple')
+searchPath, aPath = greedy(m,(m.rows,m.cols),(2,4))
+a = agent(m, footprints=True, color=COLOR.maroon, filled=True)
+b = agent(m, footprints=True, color=COLOR.yellow,shape="arrow")
+
 
 m.tracePath({a: searchPath}, delay=300)
 m.tracePath({b: aPath}, delay=300)
-m.tracePath({c: fwdPath}, delay=300)
 
-l = textLabel(m, 'A Star Path Length', len(aPath) + 1)
-l = textLabel(m, 'A Star Search Length', len(searchPath))
+
+l = textLabel(m, 'Greedy Path Length', len(aPath) + 1)
+l = textLabel(m, 'Greedy Search Length', len(searchPath))
 m.run()

@@ -46,6 +46,8 @@ class COLOR(Enum):
     green = ('green4', 'pale green')
     blue = ('DeepSkyBlue4', 'DeepSkyBlue2')
     yellow = ('yellow2', 'yellow2')
+    purple =('purple3',"black")
+    maroon = ('maroon1', "maroon2")
 
 
 class agent:
