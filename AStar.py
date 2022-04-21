@@ -50,11 +50,11 @@ def aStar(inputMaze):
     return searchPath,path,pathWithReservedArrows
 
 
-m=maze(30,30)
-m.CreateMaze(theme='light',loadMaze="maze--2022-04-20--17-49-46.csv")
+m=maze(15,15)
+m.CreateMaze(theme='light')
 searchPath, aPath, fwdPath = aStar(m)
 a = agent(m, footprints=True, color=COLOR.blue, filled=True)
-b = agent(m, 1, 1, footprints=True, color=COLOR.yellow, filled=True, goal=(m.rows, m.cols))
+b = agent(m, footprints=True, color=COLOR.yellow, filled=True, goal=(m.rows, m.cols))
 c = agent(m, footprints=True, color=COLOR.red)
 
 m.tracePath({a: searchPath}, delay=300)

@@ -14,8 +14,10 @@ def aStar(inputMaze):
     cellPriorityQueue=PriorityQueue()
     cellPriorityQueue.put( (heuristicCost(startCell, goalCell), startCell))
     pathWithReservedArrows = {}
+    searchPath=[startCell]
     while not cellPriorityQueue.empty():
         currCell=cellPriorityQueue.get()[1]
+        searchPath.append(currCell)
         if currCell==goalCell:
             break
         for direction in 'ESNW':
@@ -40,14 +42,21 @@ def aStar(inputMaze):
     while cell!=startCell:
          path[pathWithReservedArrows[cell]]=cell
          cell=pathWithReservedArrows[cell]
-    return path
+    return searchPath,path,pathWithReservedArrows
+
 
 
 m=maze(30,30)
-m.CreateMaze(theme='light',loopPercent=30,saveMaze=True)
-ag=agent(m,footprints=True,color="yellow")
-path =aStar(m)
-print({ag:path})
-m.tracePath({ag:path})
-l = textLabel(m, 'A Star Path Length', len(path) + 1)
+m.CreateMaze(theme='light',loadMaze="maze--2022-04-20--17-49-46.csv")
+searchPath, aPath, fwdPath = aStar(m)
+a = agent(m, footprints=True, color=COLOR.blue, filled=True)
+b = agent(m, footprints=True, color=COLOR.yellow, filled=True)
+c = agent(m, footprints=True, color=COLOR.red)
+
+m.tracePath({a: searchPath}, delay=300)
+m.tracePath({b: aPath}, delay=300)
+m.tracePath({c: fwdPath}, delay=300)
+
+l = textLabel(m, 'A Star Path Length', len(aPath) + 1)
+l = textLabel(m, 'A Star Search Length', len(searchPath))
 m.run()
