@@ -1,4 +1,4 @@
-from pyamaze import maze,agent,textLabel,COLOR
+from pyMaze import maze,agent,textLabel,COLOR
 from collections import deque
 
 def BFS(m,start=None):

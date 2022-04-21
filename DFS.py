@@ -1,5 +1,5 @@
 # from pyMaze import maze,agent,COLOR,textLabel
-from pyamaze import maze,agent,textLabel,COLOR
+from pyMaze import maze,agent,textLabel,COLOR
 
 def DFS(m,start=None):
     if start is None:
@@ -40,10 +40,10 @@ def DFS(m,start=None):
     return dSeacrh,dfsPath,fwdPath
 
 if __name__=='__main__':
-    m=maze(10,10) # Change to any size
-    m.CreateMaze(2,4) # (2,4) is Goal Cell, Change that to any other valid cell
+    m=maze(10,10) 
+    m.CreateMaze(theme='purple')
 
-    dSeacrh,dfsPath,fwdPath=DFS(m,(5,1)) # (5,1) is Start Cell, Change that to any other valid cell
+    dSeacrh,dfsPath,fwdPath=DFS(m,(5,1))
 
     a=agent(m,5,1,goal=(2,4),footprints=True,shape='square',color=COLOR.green)
     b=agent(m,2,4,goal=(5,1),footprints=True,filled=True)
@@ -52,18 +52,17 @@ if __name__=='__main__':
     m.tracePath({b:dfsPath})
     m.tracePath({c:fwdPath})
     m.run()
+m=maze(5,5)
+m.CreateMaze(theme='purple')
+searchPath, aPath = greedy(m,(m.rows,m.cols),(2,4))
+a = agent(m, footprints=True, color=COLOR.maroon, filled=True)
+b = agent(m, footprints=True, color=COLOR.yellow,shape="arrow")
 
-    ## The code below will generate the maze shown in video
 
-    # m=maze()
-    # m.CreateMaze(loadMaze='dfs.csv')
+m.tracePath({a: searchPath}, delay=300)
+m.tracePath({b: aPath}, delay=300)
 
-    # dSeacrh,dfsPath,fwdPath=DFS(m)
 
-    # a=agent(m,footprints=True,shape='square',color=COLOR.green)
-    # b=agent(m,1,1,goal=(5,5),footprints=True,filled=True,color=COLOR.cyan)
-    # c=agent(m,footprints=True,color=COLOR.yellow)
-    # m.tracePath({a:dSeacrh},showMarked=True)
-    # m.tracePath({b:dfsPath})
-    # m.tracePath({c:fwdPath})
-    # m.run()
+l = textLabel(m, 'Greedy Path Length', len(aPath) + 1)
+l = textLabel(m, 'Greedy Search Length', len(searchPath))
+m.run()
