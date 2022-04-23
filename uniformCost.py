@@ -49,7 +49,7 @@ def uniformCost(m,*h,start=None):
 
 if __name__=='__main__':
     myMaze=maze(10,15)
-    myMaze.CreateMaze(1,4,loopPercent=100)
+    myMaze.CreateMaze(1,4,loopPercent=100,theme='purple')
     # myMaze.CreateMaze(loadMaze='dijkMaze.csv')
 
     h1=agent(myMaze,4,4,color=COLOR.red)
@@ -69,7 +69,7 @@ if __name__=='__main__':
     textLabel(myMaze,'Total Cost',c)
 
     # a=agent(myMaze,color=COLOR.cyan,filled=True,footprints=True)
-    a=agent(myMaze,6,1,color=COLOR.cyan,filled=True,footprints=True)
+    a=agent(myMaze,6,1,color=COLOR.maroon,filled=True,footprints=True)
     myMaze.tracePath({a:path})
 
 
