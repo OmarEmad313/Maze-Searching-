@@ -44,17 +44,18 @@ def greedy(inputMaze,startCell,goalCell):
 
 
 
-m=maze(5,5)
+m=maze(10,10)
 m.CreateMaze(theme='purple')
 searchPath, aPath = greedy(m,(m.rows,m.cols),(2,4))
 a = agent(m, footprints=True, color=COLOR.maroon, filled=True)
-b = agent(m, footprints=True, color=COLOR.yellow,shape="arrow")
+b = agent(m, footprints=True, color=COLOR.yellow)
 
 
 m.tracePath({a: searchPath}, delay=300)
-m.tracePath({b: aPath}, delay=300)
+
 
 
 l = textLabel(m, 'Greedy Path Length', len(aPath) + 1)
 l = textLabel(m, 'Greedy Search Length', len(searchPath))
 m.run()
+
