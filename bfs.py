@@ -1,4 +1,4 @@
-from pyamaze import maze,agent,COLOR,textLabel
+from pyMaze import maze,agent,COLOR,textLabel
 def BFS(m):
     start=(m.rows,m.cols)
     frontier=[start]
@@ -11,18 +11,18 @@ def BFS(m):
         for d in 'ESNW':
             if m.maze_map[currCell][d]==True:
                 if d=='E':
-                    childCell=(currCell[0],currCell[1]+1)
+                    child=(currCell[0],currCell[1]+1)
                 elif d=='W':
-                    childCell=(currCell[0],currCell[1]-1)
+                    child=(currCell[0],currCell[1]-1)
                 elif d=='N':
-                    childCell=(currCell[0]-1,currCell[1])
+                    child=(currCell[0]-1,currCell[1])
                 elif d=='S':
-                    childCell=(currCell[0]+1,currCell[1])
-                if childCell in explored:
+                    child =(currCell[0]+1,currCell[1])
+                if child in explored:
                     continue
-                frontier.append(childCell)
-                explored.append(childCell)
-                bfsPath[childCell]=currCell
+                frontier.append(child)
+                explored.append(child)
+                bfsPath[child]=currCell
     fwdPath={}
     cell=(1,1)
     while cell!=start:
@@ -32,10 +32,10 @@ def BFS(m):
 
 if __name__=='__main__':
     m=maze(5,5)
-    m.CreateMaze(loopPercent=25)
+    m.CreateMaze(loopPercent=25,theme='purple')
     path=BFS(m)
 
-    a=agent(m,footprints=True,filled=True)
+    a=agent(m,footprints=True,filled=True,color=COLOR.maroon)
     m.tracePath({a:path})
     l=textLabel(m,'Length of Shortest Path',len(path)+1)
 
