@@ -24,6 +24,8 @@ def DFS(m,start=None):
                     child=(currCell[0]-1,currCell[1])
                 if d =='S':
                     child=(currCell[0]+1,currCell[1])
+
+
                 if child in explored:
                     continue
                 poss+=1
@@ -56,7 +58,7 @@ m=maze(5,5)
 m.CreateMaze(theme='purple')
 searchPath, aPath = greedy(m,(m.rows,m.cols),(2,4))
 a = agent(m, footprints=True, color=COLOR.maroon, filled=True)
-b = agent(m, footprints=True, color=COLOR.yellow,shape="arrow")
+
 
 
 m.tracePath({a: searchPath}, delay=300)
