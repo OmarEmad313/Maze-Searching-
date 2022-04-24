@@ -5,9 +5,7 @@ def heuristicCost(cell1,cell2):
     x1,y1=cell1
     x2,y2=cell2
     return abs(x1-x2)+abs(y1-y2)
-def aStar(inputMaze):
-    startCell=(m.rows,m.cols)
-    goalCell=(1, 1)
+def aStar(inputMaze,startCell,goalCell):
     h_score={cell: float("inf") for cell in m.grid}
     h_score[startCell]=0
     h2_score = {cell: float("inf") for cell in m.grid}
@@ -36,11 +34,11 @@ def aStar(inputMaze):
                 tempGScore= h_score[currCell] + 1
                 tempFScore= tempGScore + heuristicCost(child, goalCell)
 
-                if tempFScore < h2_score[childCell]:
-                 h_score[childCell] = tempGScore
-                 h2_score[childCell] = tempFScore
-                 cellPriorityQueue.put((tempFScore, heuristicCost(childCell, goalCell), childCell))
-                 pathWithReservedArrows[childCell] = currCell
+                if tempFScore < h2_score[child]:
+                 h_score[child] = tempGScore
+                 h2_score[child] = tempFScore
+                 cellPriorityQueue.put((tempFScore, heuristicCost(child, goalCell), child))
+                 pathWithReservedArrows[child] = currCell
 
     path={}
     cell=goalCell
@@ -49,10 +47,11 @@ def aStar(inputMaze):
          cell=pathWithReservedArrows[cell]
     return searchPath,path
 
-
-m=maze(10,10)
-m.CreateMaze(theme='purple')
-searchPath, aPath= aStar(m)
+m=maze(5,5)
+sourceCell=(m.rows,m.cols)
+goalCell=(4,4)
+m.CreateMaze(goalCell[0],goalCell[1],theme="purple")
+searchPath, aPath= aStar(m,sourceCell,goalCell)
 a = agent(m, footprints=True, color=COLOR.maroon, filled=True)
 b = agent(m, footprints=True, color=COLOR.yellow, filled=True, goal=(m.rows, m.cols))
 

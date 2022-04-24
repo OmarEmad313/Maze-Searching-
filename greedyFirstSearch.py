@@ -5,6 +5,8 @@ def heuristicCost(cell1,cell2):
     x1,y1=cell1
     x2,y2=cell2
     return abs(x1-x2)+abs(y1-y2)
+
+
 def greedy(inputMaze,startCell,goalCell):
     h_score = {cell: float("inf") for cell in m.grid}
     h_score[startCell]=heuristicCost(startCell, goalCell)
@@ -44,15 +46,16 @@ def greedy(inputMaze,startCell,goalCell):
 
 
 
-m=maze(10,10)
-m.CreateMaze(theme='purple')
-searchPath, aPath = greedy(m,(m.rows,m.cols),(2,4))
+m=maze(5,5)
+sourceCell=(m.rows,m.cols)
+goalCell=(4,4)
+m.CreateMaze(goalCell[0],goalCell[1],theme="purple")
+searchPath, aPath = greedy(m,sourceCell,goalCell)
 a = agent(m, footprints=True, color=COLOR.maroon, filled=True)
-b = agent(m, footprints=True, color=COLOR.yellow)
-
+b = agent(m, footprints=True, color=COLOR.yellow,shape="arrow")
 
 m.tracePath({a: searchPath}, delay=300)
-
+m.tracePath({b: aPath}, delay=300)
 
 
 l = textLabel(m, 'Greedy Path Length', len(aPath) + 1)
