@@ -48,28 +48,22 @@ def uniformCost(m,*h,start=None):
 
 
 if __name__=='__main__':
-    myMaze=maze(10,15)
+    myMaze=maze(10,10)
     myMaze.CreateMaze(1,4,loopPercent=100,theme='purple')
-    # myMaze.CreateMaze(loadMaze='dijkMaze.csv')
+    hurdle1=agent(myMaze, 2, 4, color=COLOR.red)
+    hurdle2=agent(myMaze, 5, 6, color=COLOR.red)
+    hurdle3=agent(myMaze, 2, 1, color=COLOR.red)
+    hurdle4=agent(myMaze, 3, 6, color=COLOR.red)
+    hurdle5=agent(myMaze, 4, 5, color=COLOR.red)
 
-    h1=agent(myMaze,4,4,color=COLOR.red)
-    h2=agent(myMaze,4,6,color=COLOR.red)
-    h3=agent(myMaze,4,1,color=COLOR.red)
-    h4=agent(myMaze,4,2,color=COLOR.red)
-    h5=agent(myMaze,4,3,color=COLOR.red)
-
-    h1.cost=100
-    h2.cost=100
-    h3.cost=100
-    h4.cost=100
-    h5.cost=100
-
-    # path,c=dijstra(myMaze,h1,h2,h2,h3,h4,h5)
-    path,c= uniformCost(myMaze, h1, h2, h3, h4, h5, start=(6, 1))
-    textLabel(myMaze,'Total Cost',c)
-
-    # a=agent(myMaze,color=COLOR.cyan,filled=True,footprints=True)
-    a=agent(myMaze,6,1,color=COLOR.maroon,filled=True,footprints=True)
+    hurdle1.cost=80
+    hurdle2.cost=50
+    hurdle3.cost=30
+    hurdle4.cost=10
+    hurdle5.cost=100
+    path,c= uniformCost(myMaze, hurdle1, hurdle2, hurdle3, hurdle4, hurdle5, start=(9, 7))
+    textLabel(myMaze,'Total UFS PATH',c)
+    a=agent(myMaze,9,7,color=COLOR.maroon,filled=True,footprints=True)
     myMaze.tracePath({a:path})
 
 

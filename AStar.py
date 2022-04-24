@@ -45,16 +45,16 @@ def aStar(inputMaze,startCell,goalCell):
     while cell!=startCell:
          path[pathWithReservedArrows[cell]]=cell
          cell=pathWithReservedArrows[cell]
-    return searchPath,path
+    return searchPath,path,pathWithReservedArrows
 
 m=maze(5,5)
 sourceCell=(m.rows,m.cols)
 goalCell=(4,4)
 m.CreateMaze(goalCell[0],goalCell[1],theme="purple")
-searchPath, aPath= aStar(m,sourceCell,goalCell)
+searchPath, aPath,pathWithReservedArrows= aStar(m,sourceCell,goalCell)
 a = agent(m, footprints=True, color=COLOR.maroon, filled=True)
 b = agent(m, footprints=True, color=COLOR.yellow, filled=True, goal=(m.rows, m.cols))
-
+c=
 
 
 m.tracePath({a: searchPath}, delay=300)
