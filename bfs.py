@@ -1,5 +1,5 @@
 from pyMaze import maze,agent,COLOR,textLabel
-def BFS(m):
+def BFS(m,start,goal):
     start=(m.rows,m.cols)
     frontier=[start]
     explored=[start]
@@ -24,7 +24,7 @@ def BFS(m):
                 explored.append(child)
                 bfsPath[child]=currCell
     fwdPath={}
-    cell=(1,1)
+    cell=(3,4)
     while cell!=start:
         fwdPath[bfsPath[cell]]=cell
         cell=bfsPath[cell]
@@ -32,11 +32,17 @@ def BFS(m):
 
 if __name__=='__main__':
     m=maze(5,5)
-    m.CreateMaze(loopPercent=25,theme='purple')
-    path=BFS(m)
+    start = (m.rows, m.cols)
+    goal = (3,4)
+    m.CreateMaze(goal[0],goal[1],theme='purple')
+
+    path=BFS(m,start,goal)
 
     a=agent(m,footprints=True,filled=True,color=COLOR.maroon)
     m.tracePath({a:path})
+
     l=textLabel(m,'Length of Shortest Path',len(path)+1)
+
+
 
     m.run()
