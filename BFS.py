@@ -1,67 +1,48 @@
-from pyMaze import maze,agent,textLabel,COLOR
-from collections import deque
-
-def BFS(m,start=None):
-    if start is None:
-        start=(m.rows,m.cols)
-    frontier = deque()
-    frontier.append(start)
-    bfsPath = {}
-    explored = [start]
-    bSearch=[]
-
+from pyMaze import maze,agent,COLOR,textLabel
+def BFS(m,start,goal):
+    start=(m.rows,m.cols)
+    frontier=[start]
+    explored=[start]
+    bfsPath={}
     while len(frontier)>0:
-        currCell=frontier.popleft()
-        if currCell==m._goal:
+        currCell=frontier.pop(0)
+        if currCell==(1,1):
             break
         for d in 'ESNW':
             if m.maze_map[currCell][d]==True:
                 if d=='E':
-                    childCell=(currCell[0],currCell[1]+1)
+                    child=(currCell[0],currCell[1]+1)
                 elif d=='W':
-                    childCell=(currCell[0],currCell[1]-1)
-                elif d=='S':
-                    childCell=(currCell[0]+1,currCell[1])
+                    child=(currCell[0],currCell[1]-1)
                 elif d=='N':
-                    childCell=(currCell[0]-1,currCell[1])
-                if childCell in explored:
+                    child=(currCell[0]-1,currCell[1])
+                elif d=='S':
+                    child =(currCell[0]+1,currCell[1])
+                if child in explored:
                     continue
-                frontier.append(childCell)
-                explored.append(childCell)
-                bfsPath[childCell] = currCell
-                bSearch.append(childCell)
-    # print(f'{bfsPath}')
+                frontier.append(child)
+                explored.append(child)
+                bfsPath[child]=currCell
     fwdPath={}
-    cell=m._goal
-    while cell!=(m.rows,m.cols):
+    cell=(3,4)
+    while cell!=start:
         fwdPath[bfsPath[cell]]=cell
         cell=bfsPath[cell]
-    return bSearch,bfsPath,fwdPath
+    return fwdPath
 
 if __name__=='__main__':
-    # m=maze(5,5)
-    # m.CreateMaze(loadMaze='bfs.csv')
-    # bSearch,bfsPath,fwdPath=BFS(m)
-    # a=agent(m,footprints=True,color=COLOR.green,shape='square')
-    # b=agent(m,footprints=True,color=COLOR.yellow,shape='square',filled=False)
-    # c=agent(m,1,1,footprints=True,color=COLOR.cyan,shape='square',filled=True,goal=(m.rows,m.cols))
-    # m.tracePath({a:bSearch},delay=500)
-    # m.tracePath({c:bfsPath})
-    # m.tracePath({b:fwdPath})
+    m=maze(5,5)
+    start = (m.rows, m.cols)
+    goal = (3,4)
+    m.CreateMaze(goal[0],goal[1],theme='purple')
 
-    # m.run()
+    path=BFS(m,start,goal)
+
+    a=agent(m,footprints=True,filled=True,color=COLOR.maroon)
+    m.tracePath({a:path})
+
+    l=textLabel(m,'Length of Shortest Path',len(path)+1)
 
 
-    m=maze(12,10)
-    # m.CreateMaze(5,4,loopPercent=100)
-    m.CreateMaze(loopPercent=10,theme='light')
-    bSearch,bfsPath,fwdPath=BFS(m)
-    a=agent(m,footprints=True,color=COLOR.yellow,shape='square',filled=True)
-    b=agent(m,footprints=True,color=COLOR.red,shape='square',filled=False)
-    # c=agent(m,5,4,footprints=True,color=COLOR.cyan,shape='square',filled=True,goal=(m.rows,m.cols))
-    c=agent(m,1,1,footprints=True,color=COLOR.cyan,shape='square',filled=True,goal=(m.rows,m.cols))
-    m.tracePath({a:bSearch},delay=100)
-    m.tracePath({c:bfsPath},delay=100)
-    m.tracePath({b:fwdPath},delay=100)
 
     m.run()
